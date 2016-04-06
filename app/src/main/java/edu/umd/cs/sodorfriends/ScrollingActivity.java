@@ -12,37 +12,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class ScrollingActivity extends AppCompatActivity {
 
-    private Cursor mCursor;
+    private static SodorDB mDatabase;
+    private ArrayList<Train> mTrains;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mCursor = contactDatabase(this);
-        int name_index = mCursor.getColumnIndex(DBHelper.TB_COL1);
-        int num_index = mCursor.getColumnIndex(DBHelper.TB_COL2);
-        for (int i=0; i < mCursor.getCount(); i++) {
-            String name = mCursor.getString(name_index);
-            int num = mCursor.getInt(num_index);
-            CharSequence text = name + ", engine #" + Integer.toString(num);
-            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-            mCursor.moveToNext();
-        }
+
+        mDatabase = new SodorDB(getApplicationContext());
+        mTrains = mDatabase.getTrains();
 
     }
 
-    private Cursor contactDatabase(AppCompatActivity activity) {
 
-        DBHelper dbhelper = new DBHelper(activity.getApplicationContext());
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        String[] projection = { DBHelper.TB_COL1, DBHelper.TB_COL2};
-        // get everything
-        Cursor c = db.query(DBHelper.TB_NAME, projection, null, null, null, null, null, null);
-        return c;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
