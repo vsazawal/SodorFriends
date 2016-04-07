@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,9 +30,28 @@ public class ScrollingActivity extends AppCompatActivity {
 
         mDatabase = new SodorDB(getApplicationContext());
         mTrains = mDatabase.getTrains();
+        configureCards();
+
 
     }
 
+    private void configureCards() {
+
+        TextView name1 = (TextView)findViewById(R.id.name1);
+        TextView num1 = (TextView)findViewById(R.id.num1);
+        TextView name2 = (TextView)findViewById(R.id.name2);
+        TextView num2 = (TextView)findViewById(R.id.num2);
+        TextView name3 = (TextView)findViewById(R.id.name3);
+        TextView num3 = (TextView)findViewById(R.id.num3);
+        name1.setText(mTrains.get(0).getName());
+        num1.setText("Train #" + Integer.toString(mTrains.get(0).getNumber()));
+        name2.setText(mTrains.get(1).getName());
+        num2.setText("Train #" + Integer.toString(mTrains.get(1).getNumber()));
+        name3.setText(mTrains.get(2).getName());
+        num3.setText("Train #" + Integer.toString(mTrains.get(2).getNumber()));
+
+
+    }
 
 
     @Override
